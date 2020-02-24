@@ -5,6 +5,7 @@ use App\Hobi;
 use App\Mahasiswa;
 use App\Wali;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class RelasiSeeder extends Seeder
 {

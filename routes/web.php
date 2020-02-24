@@ -11,13 +11,17 @@
 |
  */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 // input MOdel
 use App\Mahasiswa;
 use App\Dosen;
 use App\Hobi;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Routing\Route;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
 // route one to one
 Route::get('relasi-1', function () {
     // mamilih data mahasiswa yang memiliki nim '1010101' 
@@ -52,7 +56,7 @@ Route::get('relasi-4', function () {
 });
 Route::get('relasi-5', function () {
     // mamilih data hobi yang memiliki nama 'game Mobile' 
-    $hobi = Hobi::where('hobi','=','game Mobile')->first();
+    $hobi = Hobi::where('hobi','=','Mengaji Al Quran')->first();
     // menampilkan seluruh data mahasiswa yang memiliki hobi game Mobile
     foreach ($hobi->mahasiswa as $value) {
         echo '<li>Nama : '.$value->nama
@@ -68,4 +72,9 @@ Route::get('relasi-join', function () {
 Route::get('eloquent', function () {
     $mahasiswa = Mahasiswa::with('wali','dosen','hobi')->get();
     return view('eloquent',compact('mahasiswa'));
+});
+
+Route::get('eloquent-test', function () {
+    $mahasiswa = Mahasiswa::with('wali','dosen','hobi')->get()->take(1);
+    return view('eloquent-test',compact('mahasiswa'));
 });
