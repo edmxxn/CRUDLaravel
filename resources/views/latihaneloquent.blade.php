@@ -1,3 +1,5 @@
+@extends('layouts.template')
+@section('konten')
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,10 +23,14 @@
         <li>
             Nama wali : <strong>{{$data->wali->nama}}</strong>
         </li>
-        <li>Dosen Pembimbing : <strong>{{$data->dosen->nama}}<small>[{{$data->dosen->nipd}}]</small></strong></li>
+        <li>Dosen Pembimbing : <strong>{{$data->dosen->nama}}</strong>
+        </li>
+        <li>NIPD : <strong>{{$data->dosen->nipd}}</strong></li>
     </h4>
     <hr>
     @endforeach
 </body>
+</body>
 
 </html>
+@endsection

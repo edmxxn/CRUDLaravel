@@ -11,17 +11,13 @@
 |
  */
 
+Route::get('/', function () {
+    return view('welcome');
+});
 // input MOdel
 use App\Mahasiswa;
 use App\Dosen;
 use App\Hobi;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Routing\Route;
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
 // route one to one
 Route::get('relasi-1', function () {
     // mamilih data mahasiswa yang memiliki nim '1010101' 
@@ -73,8 +69,20 @@ Route::get('eloquent', function () {
     $mahasiswa = Mahasiswa::with('wali','dosen','hobi')->get();
     return view('eloquent',compact('mahasiswa'));
 });
-
-Route::get('eloquent-test', function () {
+Route::get('latihaneloquent', function () {
     $mahasiswa = Mahasiswa::with('wali','dosen','hobi')->get()->take(1);
-    return view('eloquent-test',compact('mahasiswa'));
+    return view('latihaneloquent',compact('mahasiswa'));
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+// Blade template
+Route::get('beranda',function()
+{
+    return view('beranda');
+});
+
+// WEB CRUD
+Route::resource('dosen','DosenController');
