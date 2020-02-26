@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class DosenController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +19,7 @@ class DosenController extends Controller
     public function index()
     {
         $dosen = Dosen::all();
-        return view('dosen.index',compact('dosen'));
+        return view('dosen.index', compact('dosen'));
     }
 
     /**
@@ -40,7 +44,7 @@ class DosenController extends Controller
         $dosen->nama = $request->nama;
         $dosen->nipd = $request->nipd;
         $dosen->save();
-        return redirect()->route('dosen.index')->with(['message'=>'Dosen berhasil dibuat']);
+        return redirect()->route('dosen.index')->with(['message' => 'Dosen berhasil dibuat']);
     }
 
     /**
@@ -51,8 +55,8 @@ class DosenController extends Controller
      */
     public function show(Dosen $dosen)
     {
-        $dosen = Dosen::findOrFail($id);
-        return view('dosen.show',compact('dosen'));
+        $dosen = Dosen::findOrFail($dosen->id);
+        return view('dosen.show', compact('dosen'));
     }
 
     /**
@@ -63,8 +67,8 @@ class DosenController extends Controller
      */
     public function edit(Dosen $dosen)
     {
-        $dosen = Dosen::findOrFail($id);
-        return view('dosen.edit',compact('dosen'));
+        $dosen = Dosen::findOrFail($dosen->id);
+        return view('dosen.edit', compact('dosen'));
     }
 
     /**
@@ -74,13 +78,13 @@ class DosenController extends Controller
      * @param  \App\Dosen  $dosen
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dosen $dosen)
+    public function update(Request $request, $id)
     {
         $dosen = Dosen::findOrFail($id);
         $dosen->nama = $request->nama;
         $dosen->nipd = $request->nipd;
         $dosen->save();
-        return redirect()->route('dosen.index')->with(['message'=>'Dosen berhasil di edit']);
+        return redirect()->route('dosen.index')->with(['message' => 'Dosen berhasil di edit']);
     }
 
     /**
@@ -91,7 +95,7 @@ class DosenController extends Controller
      */
     public function destroy(Dosen $dosen)
     {
-        $dosen = Dosen::findOrFail($id)->delete();
-        return redirect()->route('dosen.index')->with(['message'=>'Dosen berhasil dihapus']);
+        $dosen = Dosen::findOrFail($dosen->id)->delete();
+        return redirect()->route('dosen.index')->with(['message' => 'Dosen berhasil dihapus']);
     }
 }
