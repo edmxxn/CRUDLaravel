@@ -40,6 +40,14 @@
                                             Dosen
                                         </a>
                                     </li>
+                            @endguest
+                            @guest
+                                @else
+                                    <li class="nav-item">
+                                        <a href="{{route('hobi.index')}}" class="nav-link">
+                                            Hobi
+                                        </a>
+                                    </li>
                             @endguest   
                     </ul>
 

@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class HobiController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +19,8 @@ class HobiController extends Controller
      */
     public function index()
     {
-        //
+        $hobi = Hobi::all();
+        return view('hobi.index', compact('hobi'));
     }
 
     /**
@@ -24,7 +30,7 @@ class HobiController extends Controller
      */
     public function create()
     {
-        //
+        return view('hobi.create');
     }
 
     /**
@@ -35,7 +41,10 @@ class HobiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $hobi = new Hobi();
+        $hobi->hobi = $request->hobi;
+        $hobi->save();
+        return redirect()->route('hobi.index')->with(['message' => 'Data hobi berhasil dibuat']);
     }
 
     /**
@@ -46,7 +55,9 @@ class HobiController extends Controller
      */
     public function show(Hobi $hobi)
     {
-        //
+
+        $hobi = Hobi::findOrFail($hobi->id);
+        return view('hobi.show', compact('hobi'));
     }
 
     /**
@@ -57,7 +68,8 @@ class HobiController extends Controller
      */
     public function edit(Hobi $hobi)
     {
-        //
+        $hobi = Hobi::findOrFail($hobi->id);
+        return view('hobi.edit', compact('hobi'));
     }
 
     /**
@@ -67,9 +79,12 @@ class HobiController extends Controller
      * @param  \App\Hobi  $hobi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Hobi $hobi)
+    public function update(Request $request, $id)
     {
-        //
+        $hobi = Hobi::findOrFail($id);
+        $hobi->hobi = $request->hobi;
+        $hobi->save();
+        return redirect()->route('hobi.index')->with(['message' => 'Data hobi berhasil di Update']);
     }
 
     /**
@@ -80,6 +95,7 @@ class HobiController extends Controller
      */
     public function destroy(Hobi $hobi)
     {
-        //
+        $hobi = Hobi::findOrFail($hobi->id)->delete();
+        return redirect()->route('hobi.index')->with(['message' => 'Data hobi berhasil dihapus']);
     }
 }
