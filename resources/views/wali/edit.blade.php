@@ -6,28 +6,23 @@
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-header">
-                    Tambah Data hobi
+                    Update data Wali
                     </div>
                     <div class="card-body">
-                        <form action="{{route('mahasiswa.update',$mhs->id)}}" method="post">
+                        <form action="{{route('wali.update',$wali->id)}}" method="post">
                             @csrf
                             @method('PUT')
-                            <!-- Nama Mahasiswa -->
+                            <!-- Nama Wali -->
                             <div class="form-group">
-                                <label for="">Nama Mahasiswa</label>
-                            <input type="text" name="nama" value="{{$mhs->nama}}" class="form-control" required>
+                                <label for="">Nama Wali</label>
+                            <input type="text" name="nama" value="{{$wali->nama}}" class="form-control" required>
                             </div>
-                            {{-- Nomor induk Sekolah --}}
-                            <div class="form-group">
-                                <label for="">Nomor induk Sekolah</label>
-                            <input type="text" name="nim" value="{{$mhs->nim}}" class="form-control" required>
-                            </div>
-                            {{-- Nama Dosen --}}
+                            {{-- Nama Anak --}}
                             <div class="form-group">
                                 <label for="">Nama/Id dosen</label>
-                            <select name="id_dosen" class="form-control">
-                                @foreach ($dosen as $data)
-                            <option value="{{$data->id}}" {{$data->id == $mhs->id_dosen ? "selected": ""}}>
+                            <select name="id_mahasiswa" class="form-control">
+                                @foreach ($mhs as $data)
+                            <option value="{{$data->id}}" {{$data->id == $wali->id_mahasiswa ? "selected": ""}}>
                                 {{$data->nama}}
                             </option>
                                 @endforeach

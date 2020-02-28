@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -52,10 +56,11 @@ class MahasiswaController extends Controller
      * @param  \App\Mahasiswa  $mahasiswa
      * @return \Illuminate\Http\Response
      */
-    public function show(Mahasiswa $mhs)
-    {
-        $mhs = Mahasiswa::findOrFail($mhs->id);
-        return view('mahasiswa.show', compact('mahasiswa'));
+    public function show($id)
+    {   
+        $dosen = Dosen::all();
+        $mhs = Mahasiswa::findOrFail($id);
+        return view('mahasiswa.show', compact('mhs'));
     }
 
     /**
@@ -66,8 +71,9 @@ class MahasiswaController extends Controller
      */
     public function edit(Mahasiswa $mahasiswa)
     {
-        $mhs = Mahasiswa::findOrFail($id);
-        return view('mahasiswa.edit', compact('mhs'));
+        $dosen = Dosen::all();
+        $mhs = Mahasiswa::findOrFail($mahasiswa->id);
+        return view('mahasiswa.edit', compact('mhs'),compact('dosen'));
     }
 
     /**
@@ -79,7 +85,7 @@ class MahasiswaController extends Controller
      */
     public function update(Request $request, Mahasiswa $mahasiswa)
     {
-        $mhs = Mahasiswa::findorFail($id);
+        $mhs = Mahasiswa::findorFail($mahasiswa->id);
         $mhs->nama = $request->nama;
         $mhs->nim = $request->nim;
         $mhs->id_dosen = $request->id_dosen;
@@ -95,7 +101,7 @@ class MahasiswaController extends Controller
      */
     public function destroy(Mahasiswa $mahasiswa)
     {
-        $mhs = Mahasiswa::findOrFail($id)->delete();
+        $mhs = Mahasiswa::findOrFail($mahasiswa->id)->delete();
         return redirect()->route('mahasiswa.index')->with(['message' => 'Data berhasil dihapus']);
     }
 }
